@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="green">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>منصة الأمن السيبراني للأطفال</title>
+<style>
+:root{--bg:#0a120d;--card:#112018;--fg:#d9ffe6;--ac:#2dff7a;--ac2:#0f9d4a;--mut:#7fb596;--bad:#ff5470;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[data-theme=blue]{--bg:#07121f;--card:#0e2238;--fg:#e1f1ff;--ac:#38b6ff;--ac2:#1273b5;--mut:#7fa6c6}
+[data-theme=purple]{--bg:#120a1f;--card:#22123a;--fg:#f1e3ff;--ac:#c26bff;--ac2:#7a2bc4;--mut:#a98cc9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Tahoma,Arial,sans-serif;min-height:100vh;transition:.3s}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--ac2);background:var(--card)}
+h1{font-size:18px;margin:0;color:var(--ac);font-family:monospace}
+.th button{width:26px;height:26px;border-radius:50%;border:2px solid #fff3;margin-inline-start:6px;cursor:pointer}
+main{max-width:680px;margin:0 auto;padding:16px 16px 70px}
+.card{background:var(--card);border:1px solid var(--ac2);border-radius:14px;padding:18px;margin-bottom:14px}
+input,select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--ac2);background:var(--bg);color:var(--fg);font-size:16px;margin:6px 0 12px;font-family:inherit}
+.btn{background:var(--ac);color:#041;border:0;padding:12px 20px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:inherit}
+.btn.s{background:transparent;color:var(--ac);border:1px solid var(--ac);margin-top:8px}
+.icons{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:8px 0 14px}
+.icons span{font-size:28px;text-align:center;padding:8px 0;border:2px solid transparent;border-radius:10px;cursor:pointer;background:var(--bg)}
+.on{border-color:var(--ac)!important;box-shadow:0 0 10px var(--ac)}
+.seg{display:flex;gap:6px;margin:6px 0 12px;flex-wrap:wrap}
+.seg span{flex:1;min-width:70px;text-align:center;padding:10px 6px;border:2px solid var(--ac2);border-radius:10px;cursor:pointer;background:var(--bg);font-size:14px}
+.bar{height:8px;background:var(--bg);border-radius:6px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;background:var(--ac);transition:.3s}
+.top{display:flex;justify-content:space-between;align-items:center;font-family:monospace;gap:6px}
+.clock{font-size:20px;color:var(--ac);background:var(--bg);padding:4px 12px;border-radius:8px;border:1px solid var(--ac2)}
+.q{font-size:19px;line-height:1.7;margin:10px 0 14px}
+.msg{background:var(--bg);border:1px dashed var(--ac);border-radius:10px;padding:12px;margin:8px 0;direction:rtl;font-size:15px}
+.opt{display:block;width:100%;text-align:right;padding:13px;margin:8px 0;border-radius:10px;border:1px solid var(--ac2);background:var(--bg);color:var(--fg);font-size:16px;cursor:pointer;font-family:inherit}
+.opt.ok{background:#12803f;border-color:#2dff7a}.opt.no{background:#8a1f33;border-color:var(--bad)}
+.fb{min-height:24px;color:var(--mut);margin:6px 0;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:7px;border-bottom:1px solid var(--ac2);text-align:right}th{color:var(--ac)}
+.big{font-size:56px;text-align:center}.c{text-align:center}.wrap{overflow-x:auto}.mut{color:var(--mut)}
+.bd{display:inline-block;background:var(--bg);border:1px solid var(--ac);border-radius:20px;padding:6px 12px;margin:4px;font-size:14px}
+.meter{height:12px;border-radius:6px;background:var(--bg);overflow:hidden}.meter i{display:block;height:100%;width:0;transition:.3s}
+.cert{background:#fffdf3;color:#2a2a2a;border:8px double #c9a227;border-radius:10px;padding:30px 16px;text-align:center}
+.cert h2{color:#8a6d00;font-size:28px}.cert .nm{font-size:30px;font-weight:700;margin:14px 0}
+.fall{position:fixed;top:-40px;font-size:26px;animation:f 3s linear forwards;pointer-events:none}
+@keyframes f{to{transform:translateY(110vh) rotate(360deg)}}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}.mg .btn{margin:0;font-size:14px;padding:10px 6px;line-height:1.5}.mg small{font-weight:400}
+.tk{position:fixed;left:0;right:0;bottom:0;background:var(--ac);color:#041;overflow:hidden;white-space:nowrap;padding:9px 0 calc(9px + env(safe-area-inset-bottom,0px));z-index:50;direction:ltr;font-weight:700;font-size:15px}
+.tk span{display:inline-block;padding-left:100%;animation:tk 16s linear infinite;direction:rtl}
+@keyframes tk{to{transform:translateX(-100%)}}
+@media print{header,.noprint{display:none!important}body{background:#fff}.card{border:0;padding:0}}
+
+/* ===== HTB / THM style redesign ===== */
+:root{--bg:#0a0e17;--bg2:#0f1626;--card:#121a2c;--card2:#18223a;--line:#243350;--fg:#e6edf7;--mut:#8a98b0;--ac:#9fef00;--ac2:#5f9400;--acg:rgba(159,239,0,.16);--bad:#ff4d6a}
+[data-theme=blue]{--bg:#060c1a;--bg2:#0b1530;--card:#0f1c38;--card2:#142549;--line:#1f3a68;--ac:#2fb8ff;--ac2:#0d78b8;--acg:rgba(47,184,255,.18)}
+[data-theme=purple]{--bg:#0d0919;--bg2:#150f2e;--card:#1a1337;--card2:#231a4a;--line:#34286c;--ac:#b57bff;--ac2:#7a3fd0;--acg:rgba(181,123,255,.18)}
+body{background:radial-gradient(1200px 500px at 80% -10%,var(--acg),transparent 60%),radial-gradient(900px 500px at -10% 110%,var(--acg),transparent 60%),var(--bg);color:var(--fg);font-family:Tahoma,'Segoe UI',Arial,sans-serif}
+#mx{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.16;pointer-events:none}
+.ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.2em;flex:none}
+header{position:sticky;top:0;z-index:40;background:rgba(10,14,23,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 16px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ac)}
+.logo svg{width:34px;height:34px;filter:drop-shadow(0 0 8px var(--ac))}
+.logo b{font-family:Consolas,'Courier New',monospace;font-size:20px;letter-spacing:2px;color:var(--fg)}.logo b i{font-style:normal;color:var(--ac)}
+.logo small{display:block;font-size:11px;color:var(--mut);letter-spacing:0}
+.th button{width:22px;height:22px;border:2px solid var(--line);box-shadow:0 0 10px currentColor}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.45);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;right:0;left:0;height:2px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:.8}
+.sec{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-family:Consolas,'Courier New',monospace;font-size:16px;color:var(--fg)}.sec .ic{color:var(--ac)}
+label{display:block;font-size:12px;color:var(--mut);letter-spacing:.5px}
+input,select,textarea{background:#0a1120;border:1px solid var(--line);color:var(--fg);border-radius:10px;transition:.2s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 3px var(--acg)}
+.btn{background:var(--ac);color:#06110a;border-radius:10px;box-shadow:0 0 22px var(--acg);transition:.18s;letter-spacing:.3px}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.btn.s{background:transparent;color:var(--fg);border:1px solid var(--line);box-shadow:none}.btn.s:hover{border-color:var(--ac);color:var(--ac)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:10px;align-items:center}
+.kick{display:inline-flex;gap:6px;align-items:center;font-family:Consolas,monospace;font-size:11px;letter-spacing:2px;color:var(--ac);border:1px solid var(--ac2);background:var(--acg);padding:3px 10px;border-radius:20px;direction:ltr}
+.h1{font-size:30px;line-height:1.3;margin:12px 0 6px}.h1 span{color:var(--ac)}.glow{text-shadow:0 0 22px var(--ac2)}
+.art{width:100%;height:auto;color:var(--ac);direction:ltr}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stats div{background:#0a1120;border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center}
+.stats b{display:block;font-family:Consolas,monospace;font-size:22px;color:var(--ac)}.stats small{color:var(--mut);font-size:11px}
+.icons span{background:#0a1120;border:1px solid var(--line);border-radius:12px}
+.seg span{background:#0a1120;border:1px solid var(--line);color:var(--mut);transition:.15s}.seg span:hover{border-color:var(--ac);color:var(--fg)}
+.on{border-color:var(--ac)!important;box-shadow:0 0 12px var(--acg)!important;color:var(--fg)!important}
+.seg span.on{background:var(--acg)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mc{display:flex;align-items:center;gap:10px;text-align:right;padding:12px;border:1px solid var(--line);background:#0e1628;border-radius:12px;cursor:pointer;color:var(--fg);font-family:inherit;transition:.18s}
+.mc:hover{border-color:var(--ac);box-shadow:0 0 22px var(--acg);transform:translateY(-2px)}
+.mc.hot{border-color:var(--ac2);background:linear-gradient(135deg,var(--acg),#0e1628)}
+.mi{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;background:var(--acg);color:var(--ac);border:1px solid var(--ac2);flex:none}.mi .ic{width:24px;height:24px}
+.mt b{display:block;font-family:Consolas,'Courier New',monospace;font-size:13px;direction:ltr;text-align:right}.mt small{color:var(--mut);font-size:12px}
+.lr{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:#0a1120;border:1px solid var(--line);margin:6px 0}
+.rk{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-family:monospace;font-weight:700;background:var(--card2);color:var(--mut)}
+.lr:nth-child(1) .rk{background:#ffd84a;color:#2a1f00}.lr:nth-child(2) .rk{background:#cfd8e3;color:#1c2430}.lr:nth-child(3) .rk{background:#d68a4a;color:#2a1405}
+.lr .p{margin-inline-start:auto;font-family:monospace;color:var(--ac)}
+.top{background:#0a1120;border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:6px;gap:10px}
+.top .av{width:34px;height:34px;display:grid;place-items:center;font-size:20px;border-radius:10px;background:var(--acg);border:1px solid var(--ac2)}
+.top .nm{font-weight:700;margin-inline-end:auto}.top .xp{color:#ffd84a;font-family:monospace}
+.clock{font-family:Consolas,monospace;color:var(--ac);border:1px solid var(--ac2);background:var(--acg);box-shadow:0 0 14px var(--acg)}
+.bar{height:6px;background:#0a1120;border:1px solid var(--line)}.bar i{background:linear-gradient(90deg,var(--ac2),var(--ac));box-shadow:0 0 10px var(--ac)}
+.qh{display:flex;gap:6px;align-items:center;color:var(--ac);font-family:Consolas,monospace;font-size:12px}
+.q{font-size:20px}
+.opt{display:flex;align-items:center;gap:12px;background:#0d1526;border:1px solid var(--line);border-radius:12px;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--ac);background:#101b32;box-shadow:0 0 18px var(--acg)}
+.kl{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:Consolas,monospace;font-size:13px;color:var(--ac);border:1px solid var(--ac2);background:var(--acg)}
+.opt.ok{background:#12351a;border-color:var(--ac);box-shadow:0 0 22px var(--acg)}.opt.no{background:#3a1220;border-color:var(--bad)}
+.opt:disabled{opacity:1}.opt.w{opacity:.5}
+.msg{border-color:var(--ac);background:#0a1120;font-family:Consolas,'Courier New',monospace}
+.tag{color:var(--ac);border-color:var(--ac2);background:var(--acg);font-family:Consolas,monospace}
+.bd{background:#0a1120;border-color:var(--ac2);color:var(--fg);box-shadow:0 0 12px var(--acg)}
+.rbig{font-size:64px;color:var(--ac);filter:drop-shadow(0 0 16px var(--ac));line-height:1}.rbig .ic{width:1em;height:1em}
+table{font-size:13px}th{color:var(--ac);font-family:Consolas,monospace;font-size:12px}tr:hover td{background:rgba(255,255,255,.02)}
+.tk{background:#080c14;color:var(--ac);border-top:1px solid var(--ac2);font-family:Consolas,'Courier New',monospace}
+@media(max-width:560px){.hero{grid-template-columns:1fr}.h1{font-size:25px}.art{max-width:300px;margin:0 auto}.modes{gap:8px}.mc{padding:10px;gap:8px}.mi{width:38px;height:38px}}
+@media print{#mx{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.hl{display:flex;align-items:center;gap:12px}
+.adm{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:.18s}
+.adm:hover{border-color:var(--ac);color:var(--ac);box-shadow:0 0 14px var(--acg)}
+.modes .mc:last-child:nth-child(odd){grid-column:1/-1}
+@media(max-width:420px){.adm{padding:6px 8px;font-size:12px}.logo small{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-gamepad" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 12h4M9 10v4M16 11h.01M18 13h.01"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3M12 15v2"/></symbol>
+<symbol id="i-robot" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5M9 13h.01M15 13h.01M9 16.5h6"/><circle cx="12" cy="4" r="1"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M9 11h4"/></symbol>
+<symbol id="i-door" viewBox="0 0 24 24"><path d="M6 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17M4 21h16M13.5 12h.01"/></symbol>
+<symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 3v7M12 14v7M3 12h7M14 12h7"/></symbol>
+<symbol id="i-brush" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h.01M7 17l4-5 3 3 2-2 2 4"/></symbol>
+<symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 10a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3M8 15h8"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5zM6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H4v1a3 3 0 0 0 4 3M16 6h4v1a3 3 0 0 1-4 3M12 13v4M8 21h8M10 17h4"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 10l3 2-3 2M13 15h4"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+<symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L3 17.7V21h3.3l6.3-6.3a4 4 0 0 0 5.1-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></symbol>
+</defs></svg>
+<canvas id="mx"></canvas>
+<header><div class="logo"><svg class="ic" viewBox="0 0 24 24"><use href="#i-shield"/></svg><div><b>CYBER<i>KIDS</i></b><small>حماة الإنترنت · Security Academy</small></div></div>
+<div class="hl"><div class="th"><button style="background:#9fef00;color:#9fef00" onclick="th('green')"></button><button style="background:#2fb8ff;color:#2fb8ff" onclick="th('blue')"></button><button style="background:#b57bff;color:#b57bff" onclick="th('purple')"></button></div><button class="adm" onclick="login()"><svg class="ic" viewBox="0 0 24 24"><use href="#i-user"/></svg> دخول المشرف</button></div></header>
+<main id="app"></main>
+<div class="tk noprint"><span>📧 الرجاء إرسال نسخة من النتيجة على البريد <bdi dir="ltr">salimcollege@gmail.com</bdi> 📧</span></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://rzxfmhmhwfknexhinqkc.supabase.co";
+const SUPABASE_KEY="sb_publishable_vuicgg-qL4hgT30ydnAUmg_vkkiejxq";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let PARTICIPANT_ID=null;
+const CATS=["كلمات المرور","التصيّد والرسائل","التواصل والألعاب","المدافعون والكاشفون","الخصوصية والبصمة الرقمية","الذكاء الاصطناعي"],LV=["مبتدئ","متوسط","متقدم"];
+// [قسم, مستوى, سؤال, خيارات, الصحيح, الشرح, رسالة اختيارية]
+const Q=[
+[0,0,"أيّ كلمة مرور هي الأقوى؟",["123456","اسمك وتاريخ ميلادك","Kd#8vQ!2mLp9","password"],2,"الكلمة الطويلة المتنوعة (حروف وأرقام ورموز) يصعب تخمينها."],
+[1,0,"وصلتك هذه الرسالة. ماذا تفعل؟",["أضغط الرابط فورًا","أرسلها لأصدقائي","أتجاهلها وأخبر شخصًا بالغًا","أرسل بياناتي لأستلم الجائزة"],2,"الجوائز المفاجئة غالبًا خداع هدفه سرقة بياناتك.","🎁 مبروك! ربحت هاتفًا مجانًا! اضغط هنا: win-prize.xyz"],
+[2,0,"شخص غريب في اللعبة يسأل عن عنوان بيتك. ماذا تفعل؟",["أعطيه العنوان","أرفض وأحظره وأخبر أهلي","أعطيه نصف العنوان","أتجاهل وأكمل"],1,"لا نشارك معلوماتنا الشخصية مع الغرباء أبدًا."],
+[3,0,"ما هو الفيروس الحاسوبي؟",["شاشة الجهاز","برنامج ضار يؤذي الجهاز أو البيانات","كاميرا الويب","طابعة"],1,"الفيروس برنامج ضار؛ نحمي أجهزتنا ببرامج الحماية والحذر."],
+[0,0,"صح أم خطأ: يمكنني مشاركة كلمة سري مع صديقي المقرّب.",["صح","خطأ"],1,"كلمة السر سرّ خاص، حتى مع الأصدقاء. نشاركها مع أهلنا فقط."],
+[2,0,"تعرّضت لتنمّر إلكتروني. ماذا تفعل؟",["أردّ بالإساءة","أحتفظ بلقطة شاشة وأخبر شخصًا بالغًا","أنشر الأمر","أتحمّل بصمت"],1,"لقطة الشاشة دليل، والبالغ الموثوق يساعدك على الحماية."],
+[0,1,"ما فائدة المصادقة الثنائية (2FA)؟",["طبقة حماية إضافية عند الدخول","تحذف حسابك","تسرّع الإنترنت","لعبة جديدة"],0,"حتى لو عرف أحد كلمة سرك، يحتاج رمزًا آخر للدخول."],
+[1,1,"ما هو التصيّد الاحتيالي (Phishing)؟",["لعبة صيد","محاولة خداع للحصول على بياناتك","برنامج حماية","نوع من الشبكات"],1,"المحتالون يتنكّرون في شكل جهة موثوقة ليسرقوا بياناتك."],
+[1,1,"وصلتك هذه الرسالة. الأفضل أن:",["أدخل بياناتي بسرعة","أتحقق عبر التطبيق الرسمي أو أسأل أهلي","أرد عليها","أرسلها للجميع"],1,"البنوك لا تطلب بياناتك عبر روابط غريبة؛ تحقق دائمًا من المصدر الرسمي.","🏦 تنبيه: حسابك سيُوقف! سجّل دخولك الآن: bank-login.xyz"],
+[2,1,"أنت على شبكة واي فاي عامة مجانية. الأفضل أن:",["أدخل حسابي البنكي","أتجنّب إدخال بيانات حساسة","أنشر كلمة سري","لا مشكلة أبدًا"],1,"الشبكات العامة قد يتجسس عليها غيرك."],
+[3,1,"ما وظيفة الجدار الناري (Firewall)؟",["مكبّر صوت","يراقب الاتصالات ويحمي الجهاز","يزيد سرعة الألعاب","يطبع الملفات"],1,"هو حارس البوابة الذي يمنع الاتصالات المشبوهة."],
+[3,1,"صح أم خطأ: تحديث البرامج يسدّ الثغرات الأمنية.",["صح","خطأ"],0,"التحديثات تصلح الثغرات التي قد يستغلها المخترقون."],
+[3,2,"ما هو الاختراق الأخلاقي؟",["سرقة الحسابات","فحص الأنظمة بإذن لإصلاح ثغراتها","نشر الفيروسات","التجسس على الناس"],1,"المخترق الأخلاقي يعمل بإذن ويساعد على الحماية."],
+[3,2,"ما دور فريق Red Team (كاشفو الثغرات)؟",["يحاكي هجومًا بإذن لاكتشاف الثغرات","يسرق البيانات","يطبع الوثائق","يلعب الألعاب"],0,"يجرّب الهجوم بشكل قانوني حتى تُصلَح الثغرات قبل المجرمين."],
+[3,2,"ما دور فريق Blue Team (المدافعون)؟",["ينشر الفيروسات","يراقب الأنظمة ويدافع ويستجيب للهجمات","يصمّم الألعاب","يبيع الأجهزة"],1,"المدافعون يراقبون ويكتشفون الهجوم ويصدّونه."],
+[0,2,"ما فائدة مدير كلمات السر؟",["يحفظ كلمات سر قوية ومختلفة بأمان","يكشفها للجميع","يحذف الحسابات","يسرّع الجهاز"],0,"يتيح لك كلمة سر قوية مختلفة لكل حساب دون حفظها كلها."],
+[1,2,"صح أم خطأ: وجود القفل 🔒 بجانب الموقع يعني أنه آمن 100%.",["صح","خطأ"],1,"القفل يعني أن الاتصال مشفّر فقط، وقد يكون الموقع احتياليًا."],
+[2,2,"صديق أرسل لك ملفًا مجهولًا ليحسّن لعبتك. ماذا تفعل؟",["أفتحه فورًا","لا أفتحه وأسأل شخصًا بالغًا","أشاركه مع غيري","أعطيه حسابي"],1,"الملفات المجهولة قد تحوي برامج خبيثة، وحساب صديقك قد يكون مخترقًا."],
+[2,0,"صح أم خطأ: من الآمن نشر صورة بيتي ومدرستي على حسابي العام.",["صح","خطأ"],1,"الصور قد تكشف مكانك وتفاصيل حياتك لأشخاص لا تعرفهم."],
+[2,0,"أيّ شيء من هذه آمن لنشره على الإنترنت؟",["عنوان بيتي","رسمة رسمتها بنفسي","كلمة سري","رقم هاتف أمي"],1,"لا ننشر بياناتنا الشخصية، لكن أعمالنا الإبداعية يمكن مشاركتها بحذر."],
+[2,0,"أيّ اسم مستخدم هو الأنسب في الألعاب؟",["اسمي الكامل وعمري","اسم مستعار لا يكشف هويتي","رقم هاتفي","اسم مدرستي"],1,"الاسم المستعار يحمي هويتك الحقيقية."],
+[2,0,"وصلك طلب صداقة من شخص لا تعرفه. ماذا تفعل؟",["أقبله فورًا","أتجاهله وأسأل أهلي","أعطيه رقمي","أرسل له صوري"],1,"نقبل فقط من نعرفهم في الواقع."],
+[2,1,"ما فائدة إعدادات الخصوصية في التطبيقات؟",["تتحكم بمن يرى منشوراتك ومعلوماتك","تحذف حسابك","تسرّع التطبيق","تغيّر لون التطبيق"],0,"اجعل حسابك خاصًا ليراه أصدقاؤك الذين تعرفهم فقط."],
+[2,1,"وصلتك هذه الرسالة داخل اللعبة. ماذا تفعل؟",["أعطيهم كلمة سري","أتجاهلها وأبلّغ عن الحساب وأخبر أهلي","أرسلها لأصدقائي","أضغط الرابط لأجرّب"],1,"لا توجد جواهر مجانية مقابل كلمة السر؛ هذا احتيال.","🎮 احصل على 1000 جوهرة مجانًا! أرسل لنا اسم حسابك وكلمة سرك الآن!"],
+[2,1,"شخص في اللعبة يعرض عليك عملات مجانية من خارج المتجر الرسمي. الأفضل:",["أقبل العرض","أشتري من المتجر الرسمي وبإذن أهلي فقط","أعطيه بطاقة أمي","أصدّقه"],1,"العروض خارج المتجر الرسمي غالبًا خداع أو سرقة حسابات."],
+[2,1,"صح أم خطأ: ما أنشره قد يبقى على الإنترنت حتى بعد حذفه.",["صح","خطأ"],0,"قد يلتقط الآخرون لقطات شاشة، لذا فكّر قبل أن تنشر."],
+[2,2,"شخص تعرّفت عليه في اللعبة يطلب لقاءك سرًا. ماذا تفعل؟",["أذهب إليه","أرفض وأخبر أهلي وأبلّغ المنصة","أقابله وأخفي الأمر","أعطيه عنواني"],1,"طلب السرية علامة خطر؛ أخبر شخصًا بالغًا موثوقًا فورًا."],
+[1,2,"ما هي «الهندسة الاجتماعية»؟",["خداع الناس نفسيًا لكشف معلوماتهم","علم دراسة المجتمعات","برنامج لتصميم الألعاب","نوع من الشبكات"],0,"المحتال يستغل ثقتك أو خوفك أو استعجالك ليحصل على معلوماتك."],
+[2,2,"ما العلامة التي تدل على أن حسابًا مزيفًا ينتحل شخصية صديقك؟",["يطلب منك مالًا أو رمزًا بشكل مستعجل","يرسل تحية عادية","يضع صورة","يكتب اسمه"],0,"تحقق من صديقك باتصال أو بسؤال شخصي قبل أن تستجيب."],
+[2,2,"صح أم خطأ: يكفي أن أحذف الرسائل المسيئة دون أن أخبر أحدًا.",["صح","خطأ"],1,"احتفظ بالدليل وأخبر شخصًا بالغًا ليتم التعامل مع المشكلة."],
+[0,0,["أيّ كلمة مرور من هذه ضعيفة؟","اختر كلمة المرور التي يسهل تخمينها:"],["اسم حيواني الأليف 1234","جملة طويلة غريبة وأرقام ورموز","Tr!9#pLk@2wQ","m7$Vb!x4Zq#8"],0,"الأسماء والأرقام المتسلسلة يسهل تخمينها."],
+[0,0,["أين أحفظ كلمة سري بأمان؟","ما أأمن مكان لكلمة مرورك؟"],["على ورقة ملصقة بالشاشة","في رأسي أو في مدير كلمات سر موثوق","في رسالة لصديقي","في مجموعة الصف"],1,"الورقة الظاهرة والرسائل قد يراها غيرك."],
+[1,0,["صح أم خطأ: أفتح أي رابط يصلني من رقم مجهول.","صح أم خطأ: لا بأس أن أضغط على روابط الغرباء."],["صح","خطأ"],1,"الروابط المجهولة قد تسرق بياناتك أو تضر جهازك."],
+[1,0,["وصلك بريد من «مدير اللعبة» يطلب كلمة سرك. ماذا تفعل؟","شخص يقول إنه مدير لعبتك ويطلب كلمة سرك. ما تصرّفك؟"],["أرد بكلمة سري","أتجاهل فمدراء الألعاب لا يطلبونها أبدًا","أعطيه نصفها","أشاركها مع أصدقائي"],1,"لا أحد من الشركات الحقيقية يطلب كلمة سرك."],
+[2,0,["ما أفضل ما تفعله عند رؤية محتوى مخيف على الإنترنت؟","ظهر لك محتوى مخيف فجأة. ماذا تفعل؟"],["أشاهده كله","أغلقه وأخبر شخصًا بالغًا","أرسله لأصدقائي","أتجاهل وأنساه"],1,"إخبار شخص بالغ يحميك ويحمي غيرك."],
+[2,0,["صح أم خطأ: أخبر أهلي بما يزعجني على الإنترنت.","صح أم خطأ: من الصواب أن أحكي لأهلي عن أي شيء يضايقني على الإنترنت."],["صح","خطأ"],0,"أهلك هم الأقدر على مساعدتك وحمايتك."],
+[3,0,["ما الذي يحمي جهازك من الفيروسات؟","أيّ مما يلي يساعد في حماية جهازك من البرامج الضارة؟"],["برنامج مكافحة الفيروسات","كاميرا إضافية","سماعات جديدة","فأرة جديدة"],0,"برنامج الحماية يكتشف البرامج الضارة ويمنعها."],
+[3,0,["ظهرت لك هذه النافذة فجأة. ماذا تفعل؟","فتحت صفحة فظهرت هذه النافذة. ما تصرّفك؟"],["أضغط عليها فورًا","أغلقها ولا أضغط وأخبر شخصًا بالغًا","أتصل بالرقم المكتوب","أدخل كلمة سري"],1,"النوافذ المخيفة المفاجئة غالبًا خدعة.","⚠️ جهازك مصاب بفيروس! اضغط هنا لإصلاحه الآن"],
+[0,1,["ما الأفضل للحسابات المتعددة؟","لديك عدة حسابات. ماذا تفعل بكلمات السر؟"],["كلمة سر واحدة لكل شيء","كلمة سر مختلفة لكل حساب","كلمة سر قصيرة","نفس الكلمة مع رقم بسيط"],1,"إذا سُرقت كلمة واحدة لن تُفتح بها بقية حساباتك."],
+[0,1,["متى أغيّر كلمة السر فورًا؟","في أيّ حالة يجب أن أغيّر كلمة سري بسرعة؟"],["عندما أشك أنها كُشفت","كل يوم دون سبب","لا أغيّرها أبدًا","عند تغيير لون الشاشة"],0,"الشك في كشفها سبب كافٍ لتغييرها فورًا."],
+[1,1,["كيف تتحقق أن الرابط آمن قبل فتحه؟","قبل أن تفتح رابطًا مشبوهًا، ما الأفضل؟"],["أضغط ثم أنظر","أنظر إلى عنوانه الحقيقي وأسأل بالغًا إن شككت","أنسخه لأصدقائي","أعتمد على الرموز التعبيرية"],1,"عنوان الرابط الحقيقي يكشف كثيرًا من الخدع."],
+[1,1,["وصلتك هذه الرسالة. ما تصرفك؟","تلقيت هذه الرسالة. ماذا تفعل؟"],["أدفع بسرعة","أتجاهل وأتحقق من شركة الشحن الرسمية","أرسل بطاقة أمي","أرد برقمي"],1,"الرسائل المستعجلة بروابط غريبة علامة احتيال.","📦 طردك عالق! ادفع 2 ريال هنا: parcel-pay.top"],
+[2,1,["ما معنى التنمّر الإلكتروني؟","أيّ مما يلي يعبّر عن التنمّر الإلكتروني؟"],["إيذاء أحد عبر الإنترنت بالكلام أو الصور","لعبة جماعية","نوع من الأجهزة","برنامج تعليمي"],0,"التنمّر الإلكتروني إيذاء مرفوض ويجب الإبلاغ عنه."],
+[2,1,["أحد أصدقائك يتعرض للتنمّر على الإنترنت. ما تفعل؟","رأيت زميلًا يتعرض للتنمّر الإلكتروني. ماذا تفعل؟"],["أشاركهم الضحك","أقف معه وأخبر بالغًا وأبلغ المنصة","أتجاهل","أنشر الرسائل"],1,"الوقوف مع المتضرر وإبلاغ بالغ يوقف الأذى."],
+[3,1,["ما فائدة النسخ الاحتياطي لملفاتك؟","لماذا ننسخ ملفاتنا احتياطيًا؟"],["يحفظ نسخة تعيد بها ملفاتك إذا فُقدت أو تضررت","يسرّع الجهاز","يغيّر الخلفية","يزيد الصوت"],0,"النسخة الاحتياطية تنقذ ملفاتك من الضياع أو الفيروسات."],
+[3,1,["صح أم خطأ: برنامج الحماية القديم دون تحديث كافٍ لحمايتي.","صح أم خطأ: لا حاجة لتحديث برنامج الحماية."],["صح","خطأ"],1,"تظهر فيروسات جديدة دائمًا، فيجب تحديث الحماية."],
+[0,2,["ما الذي يجعل كلمة المرور أقوى؟","أيّ مما يلي يرفع قوة كلمة المرور؟"],["الطول والتنوع وعدم التكرار","اسم الأب","تاريخ الميلاد","تكرار الاسم"],0,"الطول والتنوع يزيدان صعوبة التخمين."],
+[1,2,["ما هو التصيّد الموجّه (Spear Phishing)؟","ماذا نعني بالتصيّد الموجّه؟"],["تصيّد موجّه لشخص معيّن بمعلومات عنه","لعبة صيد بالسهام","نوع من الشبكات","برنامج مكافحة"],0,"المحتال يجمع معلومات عنك ليبدو كلامه مقنعًا."],
+[1,2,["صح أم خطأ: البريد الذي يحمل اسم شركتك صادق دائمًا.","صح أم خطأ: إذا ظهر اسم جهة معروفة كمرسل فالبريد موثوق."],["صح","خطأ"],1,"يمكن تزييف اسم المرسل بسهولة."],
+[2,2,["ما المقصود بحماية «الهوية الرقمية»؟","ماذا تعني حماية هويتك الرقمية؟"],["حماية معلوماتي وصوري وحساباتي من سوء الاستخدام","حذف كل حساباتي","نشر بياناتي","مشاركة كلمات السر"],0,"هويتك الرقمية هي كل ما يخصك على الإنترنت."],
+[3,2,["ما اسم الثغرة الجديدة التي لا يعرفها المطوّرون بعد؟","ثغرة يستغلها المهاجم قبل علم مطوّريها بها. ما اسمها؟"],["Zero-Day","Pixel","Cookie Day","Wi-Fi"],0,"تسمى ثغرة اليوم الصفري لأنه لم تُتح للمطوّرين أيام لإصلاحها."],
+[3,2,["ماذا يفعل المدافع إذا لاحظ نشاطًا مشبوهًا في الشبكة؟","لاحظ فريق الدفاع نشاطًا غريبًا في الشبكة. ما التصرف الصحيح؟"],["يتجاهله","يسجّله ويبلّغ الفريق ويعزل الجهاز المصاب","ينشره علنًا","يطفئ كل الأجهزة ويهرب"],1,"التوثيق والإبلاغ والعزل خطوات الاستجابة الصحيحة."],
+[3,2,["ما فائدة اختبار الاختراق (Penetration Testing)؟","لماذا تجري الشركات اختبار الاختراق؟"],["اكتشاف الثغرات قبل أن يستغلها المهاجمون","سرقة الأنظمة","تسريع الإنترنت","تحميل الألعاب"],0,"يُجرى بإذن لإصلاح الثغرات قبل المجرمين."],
+[3,2,["ما فائدة حساب مستقل لكل شخص على الجهاز المشترك؟","لماذا ننشئ لكل مستخدم حسابًا مستقلًا على الجهاز المشترك؟"],["يفصل ملفات كل شخص ويحمي خصوصيته","يبطئ الجهاز","يغيّر الألوان","يحذف الألعاب"],0,"الحسابات المنفصلة تمنع الاطلاع على ملفات الآخرين."],
+[4,0,['ما المعلومة التي لا أنشرها على الإنترنت أبدًا؟','أيّ معلومة تبقى سرية دائمًا على الإنترنت؟'],['لوني المفضل','عنوان بيتي ورقم هاتفي','اسم لعبتي المفضلة','رسمة رسمتها'],1,'العنوان والهاتف معلومات خاصة لا يراها الغرباء.'],
+[4,0,['ماذا يحدث عندما أنشر صورة على الإنترنت؟','بعد أن أنشر صورة، ما الذي قد يحدث لها؟'],['تختفي بعد دقيقة','قد يراها كثيرون ويحفظونها','لا يراها أحد','تُحذف تلقائيًا'],1,'الصورة المنشورة قد تُحفظ وتنتشر خارج سيطرتك.'],
+[4,1,['ما البصمة الرقمية؟','ماذا نقصد بالبصمة الرقمية؟'],['أثر ما أفعله وأنشره على الإنترنت','بصمة إصبعي على الهاتف فقط','لعبة جديدة','برنامج للرسم'],0,'كل ما تنشره أو تبحث عنه يترك أثرًا يسمى البصمة الرقمية.'],
+[4,1,['هل يمكن حذف كل شيء نشرته من الإنترنت نهائيًا؟','إذا حذفت منشورًا، فهل يختفي أثره تمامًا؟'],['نعم دائمًا','ليس دائمًا، فقد يكون غيري حفظه','نعم بعد يوم','نعم إذا أغلقت الجهاز'],1,'قد يلتقط الآخرون لقطات شاشة، لذلك نفكّر قبل النشر.'],
+[4,2,['ما أفضل طريقة لبناء سمعة رقمية إيجابية؟','كيف تبني سمعة رقمية جيدة؟'],['أنشر ما يغضب الناس','أفكر قبل النشر وأحترم الآخرين','أستخدم اسم شخص آخر','أنشر كل ما أفعله'],1,'السمعة الرقمية تُبنى بمنشورات محترمة ومدروسة.'],
+[4,2,['تريد نشر صورة فيها مدرستك. ما الاحتياط الأهم؟','قبل أن تنشر صورة تظهر فيها مدرستك، ما الأهم؟'],['أنشرها فورًا','أتأكد أنها لا تكشف مكاني ومعلوماتي وأسأل أهلي','أضع موقعي عليها','أرسلها للغرباء'],1,'الصور قد تكشف مكانك وروتينك لأشخاص لا تعرفهم.'],
+[5,0,['ما الذكاء الاصطناعي؟','ماذا نسمي البرامج الذكية التي تتعلم وتجيب عن أسئلتنا؟'],['برنامج يتعلم ويساعد مثل الإجابة والرسم','شخص صغير داخل الحاسوب','نوع من الألعاب فقط','كاميرا'],0,'هو برامج تتعلم من البيانات لتساعدنا في أعمال كثيرة.'],
+[5,0,['صح أم خطأ: كل ما يقوله الذكاء الاصطناعي صحيح دائمًا.','صح أم خطأ: لا حاجة لمراجعة معلومات الذكاء الاصطناعي.'],['صح','خطأ'],1,'قد يخطئ الذكاء الاصطناعي، فنتحقق من المعلومات.'],
+[5,1,['هذه الصورة تبدو مستحيلة. ماذا تفعل؟','وصلتك هذه الصورة المثيرة. ما التصرف الصحيح؟'],['أصدقها وأنشرها','أتحقق منها فقد تكون مصنوعة بالذكاء الاصطناعي','أرسلها للجميع','أكتب أنها حقيقية'],1,'الصور المزيفة تُصنع بسهولة، فتحقق قبل النشر.','📷 صورة لشخص يمشي على الماء في وسط البحر!'],
+[5,1,['ما الذي لا أكتبه في أدوات الذكاء الاصطناعي؟','أيّ معلومة لا أشاركها مع أدوات الذكاء الاصطناعي؟'],['سؤالًا عن الدرس','اسمي وعنواني وكلمة سري','معلومة عن الفضاء','طلب فكرة لرسمة'],1,'لا نشارك بياناتنا الخاصة مع أي أداة على الإنترنت.'],
+[5,2,['ما الـ Deepfake؟','ماذا نسمي الفيديوهات المزيفة التي تقلّد وجوه الناس وأصواتهم؟'],['فيديو أو صوت مزيّف يُنتَج بالذكاء الاصطناعي','لعبة جديدة','برنامج حماية','نوع من الشبكات'],0,'يستخدمه المحتالون لخداع الناس، فلا نصدّق كل فيديو.'],
+[5,2,['ما التصرف الأفضل؟','كيف تتصرف مع هذا الفيديو؟'],['أرسل المال','أتجاهله وأعرف أنه قد يكون مزيفًا وأخبر شخصًا بالغًا','أشاركه','أرسل بياناتي'],1,'المحتالون يستخدمون وجوه المشاهير المزيفة لخداعك.','📹 فيديو لمشهور يطلب منك إرسال مبلغ ليضاعفه لك!'],
+[3,0,['كيف يصلح الفريق الأزرق هذه الثغرة؟','اكتشف الفريق الأحمر ثغرة. ما حل الفريق الأزرق؟'],['يتركها','يغيّرها إلى كلمة سر قوية','يزيدها رقمًا','يخبر الجميع بها'],1,'الفريق الأزرق يصلح الثغرات التي يكتشفها الفريق الأحمر.','🔴 الفريق الأحمر وجد: كلمة سر مدير الألعاب هي 1234'],
+[3,1,['ما حل الفريق الأزرق؟','كيف يتصرف المدافعون مع هذه الثغرة؟'],['يتجاهلها','يحدّث البرنامج فورًا','يحذف الجهاز','يغيّر الخلفية'],1,'التحديث يسدّ الثغرة قبل أن يستغلها أحد.','🔴 الفريق الأحمر وجد: برنامجًا قديمًا لم يُحدَّث منذ سنة'],
+[3,2,['ما أفضل حل للفريق الأزرق؟','كيف يعالج الفريق الأزرق هذه المشكلة؟'],['يعاقبهم','يدرّبهم على كشف التصيّد ويفعّل المصادقة الثنائية','يغلق الشركة','يترك الأمر'],1,'التدريب وطبقات الحماية الإضافية هما أفضل علاج.','🔴 الفريق الأحمر وجد: موظفين ينقرون على رسائل التصيّد']
+];
+const pk=x=>Array.isArray(x)?x[Math.random()*x.length|0]:x;let RN=8,ACAD=null,IC='🦊',MT=0,DS,EG,WR=0,PO={s:0,b:0,e:0};
+const VAR={0:["اختر كلمة المرور الأصعب على المخترقين:"],1:["وصلتك رسالة تعدك بجائزة. ما التصرف الصحيح؟"],2:["لاعب لا تعرفه يطلب منك عنوان منزلك. ما تصرّفك؟"],3:["ماذا نسمّي برنامجًا خبيثًا ينتشر ويؤذي الأجهزة؟"],4:["صح أم خطأ: لا بأس أن أعطي كلمة سري لأعزّ أصدقائي."],5:["إذا ضايقك أحدهم عبر الإنترنت، فما الأفضل؟"],6:["ماذا تفعل المصادقة الثنائية لحسابك؟"],7:["ماذا يقصد بكلمة Phishing؟"],8:["رسالة تدّعي أنها من البنك وتطلب الدخول عبر رابط. ماذا تفعل؟"],9:["أنت في مقهى وتستخدم شبكة واي فاي مفتوحة. ما التصرف الآمن؟"],10:["أيّ مما يلي يعمل كحارس يمنع الاتصالات المشبوهة؟"],11:["صح أم خطأ: تحديث التطبيقات بانتظام يزيد أمان جهازك."],12:["أيّ مما يلي يصف الاختراق الأخلاقي الصحيح؟"],13:["ماذا يفعل فريق Red Team في الأمن السيبراني؟"],14:["ماذا يفعل فريق Blue Team في الأمن السيبراني؟"],15:["لماذا يستخدم الناس مدير كلمات السر؟"],16:["صح أم خطأ: إذا ظهر قفل بجانب الموقع فهو آمن تمامًا."],17:["وصلك ملف غريب من شخص يقول إنه يطوّر لعبتك. ما تصرّفك؟"],18:["صح أم خطأ: يمكنني نشر صور بيتي ومدرستي للجميع."],19:["ما الشيء الذي يمكن نشره بأمان؟"],20:["ما أفضل اسم تستخدمه في الألعاب على الإنترنت؟"],21:["شخص غريب أرسل لك طلب صداقة. ماذا تفعل؟"],22:["ما فائدة ضبط الخصوصية في تطبيقاتك؟"],23:["رسالة داخل اللعبة تعدك بجواهر مقابل كلمة سرك. ما تصرّفك؟"],24:["يعرض عليك لاعب عملات مجانية خارج المتجر الرسمي. ماذا تفعل؟"],25:["صح أم خطأ: المنشور المحذوف قد يظل محفوظًا عند غيرك."],26:["صديق جديد من اللعبة يلحّ أن تقابله دون علم أهلك. ماذا تفعل؟"],27:["ما المقصود بالهندسة الاجتماعية؟"],28:["كيف تكتشف حسابًا مزيفًا ينتحل صديقك؟"],29:["صح أم خطأ: يكفي حذف الرسائل المسيئة وعدم إخبار أحد."]};
+const BASE=Q.length;let CQ=[];
+const ICONS=["🦊","🐱","🐼","🦁","🐯","🐸","🦄","🐙","🤖","👾","🚀","🦉"];
+let U={},S={lvl:0,cat:-1},P=[],i=0,pts=0,okc=0,bon=0,left=0,DUR=600,tm=null,adminRefreshTimer=null,order=[],done=false,qs=0,wrong=[],cc={},LAST=null,ROWS=[],FIL='';
+const $=s=>document.querySelector(s),app=$('#app');
+const th=t=>document.documentElement.dataset.theme=t;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+function snd(ok){try{const c=new(window.AudioContext||webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=ok?880:200;g.gain.value=.08;o.start();o.stop(c.currentTime+(ok?.15:.3))}catch(e){}}
+function rain(e){for(let k=0;k<24;k++){const s=document.createElement('span');s.className='fall';s.textContent=e[k%e.length];s.style.left=Math.random()*95+'%';s.style.animationDelay=Math.random()*1.2+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),4500)}}
+function participantKey(name){return String(name||'').trim().toLocaleLowerCase('ar').replace(/\s+/g,' ')}
+function fromDb(r){return {name:r.name,icon:r.icon||'',team:r.team||'',age:r.age_group||'',lvl:r.level??0,cat:r.category??-1,pts:r.points??0,ok:r.correct_answers??0,total:r.total_questions??0,secs:r.duration_seconds??0,ts:r.completed_at?new Date(r.completed_at).getTime():Date.now(),w:Array.isArray(r.wrong_questions)?r.wrong_questions:[],b:Array.isArray(r.badges)?r.badges:[],mode:r.activity_mode||'تحدّي'};}
+function toDb(r){return {participant_id:PARTICIPANT_ID,name:r.name,icon:r.icon||'',team:r.team||'',age_group:r.age||'',level:r.lvl??0,category:r.cat??-1,points:r.pts??0,correct_answers:r.ok??0,total_questions:r.total??0,duration_seconds:r.secs??0,completed_at:new Date(r.ts||Date.now()).toISOString(),wrong_questions:r.w||[],badges:r.b||[],activity_mode:r.mode||'تحدّي'};}
+async function load(){
+ const {data:{session}}=await sb.auth.getSession();
+ if(session){const {data,error}=await sb.from('results').select('*').order('points',{ascending:false});if(error)throw error;return (data||[]).map(fromDb)}
+ const {data,error}=await sb.from('public_leaderboard').select('*').order('points',{ascending:false}).limit(200);
+ if(error)throw error;return (data||[]).map(r=>({name:r.name,icon:r.icon||'',team:r.team||'',lvl:r.level??0,pts:r.points??0,mode:r.activity_mode||'تحدّي',ts:new Date(r.completed_at).getTime(),secs:0,ok:0,total:0,w:[],b:[]}));
+}
+async function registerOnce(name){
+ const {data,error}=await sb.rpc('register_participant',{p_name:String(name).trim(),p_team:$('#tn').value.trim()||null,p_icon:IC,p_age_group:$('#ag').value||null});
+ if(error){if(error.code==='23505'||/already registered/i.test(error.message||''))return false;console.error(error);alert('تعذّر التسجيل في قاعدة البيانات: '+error.message);return false;}
+ PARTICIPANT_ID=data;return !!data;
+}
+async function saveResult(rec){const {error}=await sb.from('results').insert(toDb(rec));if(error)throw error;return true;}
+async function loadDur(){
+ try{const {data,error}=await sb.from('settings').select('value').eq('key','main').maybeSingle();if(error)throw error;if(data?.value){if(data.value.duration_seconds)DUR=+data.value.duration_seconds;if(data.value.round_questions)RN=+data.value.round_questions;}}catch(e){console.warn('Settings load:',e.message)}
+}
+async function loadQ(){
+ Q.length=BASE;let c=[];try{const {data,error}=await sb.from('questions').select('*').order('created_at');if(error)throw error;c=(data||[]).map(x=>({c:x.category,l:x.level,q:x.question_text,o:x.options,a:x.correct_option,e:x.explanation||''}));}catch(e){console.warn('Questions load:',e.message)}
+ CQ=c;c.forEach(x=>Q.push([x.c,x.l,esc(x.q),x.o.map(esc),x.a,esc(x.e)]));
+}
+async function saveQ(){
+ const {data:{session}}=await sb.auth.getSession();if(!session)throw new Error('يجب تسجيل دخول المشرف لحفظ الأسئلة');
+ const {error:delError}=await sb.from('questions').delete().gte('created_at','1970-01-01T00:00:00Z');if(delError)throw delError;
+ if(CQ.length){const rows=CQ.map(x=>({category:x.c,level:x.l,question_text:x.q,options:x.o,correct_option:x.a,explanation:x.e||''}));const {error}=await sb.from('questions').insert(rows);if(error)throw error;}
+ await loadQ();
+}
+function seg(id,arr,sel,all){return `<div class="seg" id="${id}">${all?`<span data-k="-1" class="${sel==-1?'on':''}">الكل</span>`:''}${arr.map((x,k)=>`<span data-k="${k}" class="${sel==k?'on':''}">${x}</span>`).join('')}</div>`}
+function bind(id,fn){document.querySelectorAll('#'+id+' span').forEach(e=>e.onclick=()=>{document.querySelectorAll('#'+id+' span').forEach(x=>x.classList.remove('on'));e.classList.add('on');fn(+e.dataset.k)})}
+
+async function home(){
+ clearInterval(adminRefreshTimer);ACAD=null;IC=ICONS[0];clearInterval(tm);await loadDur();await loadQ();
+ const M=[['go','shield','Cyber Heroes','تحدّي الأبطال','hot'],['ac','cap','Heroes Academy','5 محطات وشهادة','hot'],['dt','search','Digital Detective','اكتشف الرسالة المزيفة',''],['es','door','Escape Room','غرفة الهروب السيبرانية',''],['wh','wheel','Cyber Wheel','عجلة الأمن السيبراني','']],T=[['ps','brush','Poster Studio','صمّم ملصقًا توعويًا',''],['lab','flask','Password Lab','مختبر كلمة المرور','']],
+ MC=m=>`<button class="mc ${m[4]}" id="${m[0]}"><span class="mi">${I(m[1])}</span><span class="mt"><b>${m[2]}</b><small>${m[3]}</small></span></button>`;
+ app.innerHTML=`<div class="card hero"><div><span class="kick">${I('terminal')} SECURITY TRAINING</span><h2 class="h1 glow">كن <span>حامي الإنترنت</span></h2><p class="mut" style="margin:0;line-height:1.7">تحدّيات وألغاز وأنشطة ممتعة لتتعلّم الأمن السيبراني وتجمع النقاط والشارات.</p><div class="stats"><div><b>${Q.length}</b><small>سؤالًا</small></div><div><b>${CATS.length}</b><small>أقسام</small></div><div><b>6</b><small>أنشطة</small></div></div></div>${HERO}</div>
+ <div class="card"><h3 class="sec">${I('user')} ملف المتسابق</h3>
+ <label>اسمك</label><input id="nm" maxlength="20" placeholder="اكتب اسمك">
+ <label>اختر فريقك</label><select id="tn"><option value="">بدون فريق</option><option value="الفريق الأزرق">🔵 الفريق الأزرق</option><option value="الفريق الأحمر">🔴 الفريق الأحمر</option><option value="الفريق الأخضر">🟢 الفريق الأخضر</option><option value="الفريق الأصفر">🟡 الفريق الأصفر</option><option value="الفريق الأبيض">⚪ الفريق الأبيض</option><option value="الفريق البنفسجي">🟣 الفريق البنفسجي</option><option value="الفريق الأسود">⚫ الفريق الأسود</option></select>
+ <label>الفئة العمرية</label><select id="ag"><option value="">اختر فئتك</option><option value="6–8">6–8 سنوات</option><option value="9–11">9–11 سنة</option><option value="12–14">12–14 سنة</option><option value="15–17">15–17 سنة</option></select><div id="ah" class="mut" style="margin:-6px 0 10px"></div>
+ <label>اختر أيقونتك</label><div class="icons" id="ic">${ICONS.map((x,k)=>`<span data-k="${k}" class="${k==0?'on':''}">${x}</span>`).join('')}</div>
+ <label>المستوى</label>${seg('sl',LV,S.lvl)}<label>القسم</label>${seg('sc',CATS,S.cat,1)}</div>
+ <div class="card"><h3 class="sec">${I('flag')} اختر مهمتك</h3><p class="mut" style="margin:-6px 0 12px;font-size:13px">${RN} أسئلة جديدة في كل جولة · الوقت ${DUR/60} دقائق</p><div class="modes">${M.map(MC).join('')}</div></div>
+ <div class="card"><h3 class="sec">${I('tool')} Tools · أدوات إضافية</h3><div class="modes">${T.map(MC).join('')}</div></div>
+ <div class="card"><h3 class="sec">${I('trophy')} Leaderboard · لوحة الصدارة</h3><div id="lb" class="mut">جارٍ التحميل…</div></div>`;
+ document.querySelectorAll('#ic span').forEach(e=>e.onclick=()=>{document.querySelectorAll('#ic span').forEach(x=>x.classList.remove('on'));e.classList.add('on');IC=ICONS[e.dataset.k]});
+ bind('sl',k=>S.lvl=k);bind('sc',k=>S.cat=k);
+ const reg=f=>async()=>{const n=$('#nm').value.trim();if(!n){$('#nm').focus();window.scrollTo({top:0,behavior:'smooth'});return}
+  const allowed=await registerOnce(n);if(!allowed){alert('هذا الاسم مسجّل مسبقًا ولا يمكن التسجيل مرة أخرى. يرجى التواصل مع المشرف.');return}
+  U={name:n,team:$('#tn').value.trim(),icon:IC,age:$('#ag').value};f()};
+ $('#go').onclick=reg(start);$('#ac').onclick=reg(academy);$('#dt').onclick=reg(()=>detective(0));$('#es').onclick=reg(escape_);$('#wh').onclick=reg(wheel);$('#ps').onclick=reg(poster);$('#lab').onclick=lab;
+ $('#ag').onchange=e=>{const m={'6–8':[0,'الخصوصية والغرباء والألعاب الآمنة'],'9–11':[0,'كلمات المرور والروابط المزيفة والتنمّر'],'12–14':[1,'التصيّد والبصمة الرقمية والذكاء الاصطناعي'],'15–17':[2,'الاحتيال المتقدم وأساسيات الأمن السيبراني']}[e.target.value];if(!m)return;S.lvl=m[0];document.querySelectorAll('#sl span').forEach(x=>x.classList.toggle('on',+x.dataset.k==S.lvl));$('#ah').textContent='مواضيع مقترحة: '+m[1]};
+ const r=(await load()).sort((a,b)=>(b.pts??0)-(a.pts??0)||a.secs-b.secs).slice(0,10);
+ if($('#lb'))$('#lb').innerHTML=r.length?r.map((x,k)=>`<div class="lr"><span class="rk">${k+1}</span><span style="font-size:20px">${esc(x.icon)}</span><span>${esc(x.name)}</span><span class="p">${x.pts??0} XP</span></div>`).join(''):'كن أول المشاركين!';
+}
+const I=(n,c='')=>`<svg class="ic ${c}" viewBox="0 0 24 24"><use href="#i-${n}"/></svg>`,CI=['key','mail','gamepad','shield','lock','robot'];
+const HERO=`<svg class="art" viewBox="0 0 320 220" fill="none"><g stroke="currentColor" opacity=".28"><path d="M0 34h86l18 18h50M320 176H224l-18-18h-44M52 220v-44l18-18h46M262 0v38l18 18"/><circle cx="154" cy="52" r="3"/><circle cx="162" cy="158" r="3"/><circle cx="262" cy="38" r="3"/></g><rect x="10" y="22" width="178" height="116" rx="9" fill="#0a1120" stroke="currentColor" opacity=".95"/><path d="M10 44h178" stroke="currentColor" opacity=".45"/><circle cx="25" cy="33" r="3.5" fill="#ff5f57"/><circle cx="38" cy="33" r="3.5" fill="#febc2e"/><circle cx="51" cy="33" r="3.5" fill="#28c840"/><g font-family="Consolas,monospace" font-size="10.5"><text x="22" y="64" fill="currentColor">$ scan --threats</text><text x="22" y="82" fill="#8a98b0">[+] weak pass: fixed</text><text x="22" y="98" fill="#8a98b0">[+] fake link: blocked</text><text x="22" y="114" fill="#8a98b0">[+] stranger: reported</text><text x="22" y="130" fill="currentColor">$ status: SAFE _</text></g><g transform="translate(196 52)" style="filter:drop-shadow(0 0 10px currentColor)"><path d="M46 0l46 17v36c0 30-20 48-46 58C20 101 0 83 0 53V17z" fill="#0a1120" stroke="currentColor" stroke-width="3"/><path d="M26 54l15 15 28-30" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g><g stroke="currentColor" opacity=".5"><path d="M120 190h60M200 190h40"/><rect x="246" y="182" width="52" height="16" rx="4"/></g><text x="272" y="194" font-family="Consolas,monospace" font-size="9" fill="currentColor" text-anchor="middle">LEVEL 1</text></svg>`;
+const ST=[0,1,2,5];
+function pickQ(c,n){let sn=[];try{sn=JSON.parse(localStorage.getItem('cks')||'[]')}catch(e){}
+ const r=Q.map((q,k)=>[q,k]).filter(([q])=>q[1]==S.lvl&&(c<0||q[0]==c)).map(x=>[x,(sn.includes(x[1])?1:0)+Math.random()*.9]).sort((a,b)=>a[1]-b[1]).map(x=>x[0]).slice(0,n);
+ try{localStorage.setItem('cks',JSON.stringify(sn.concat(r.map(x=>x[1])).slice(-60)))}catch(e){}return r}
+function academy(){ACAD={det:0,dp:0};P=ST.flatMap(c=>pickQ(c,3));run()}
+async function miniEnd(mode,p,ok,total,B){const secs=Math.round((Date.now()-MT)/1000),rec={name:U.name,icon:U.icon,team:U.team,age:U.age,lvl:S.lvl,cat:-1,pts:p,ok,total,secs,ts:Date.now(),w:[],b:B,mode};
+ LAST={...rec,rank:ok==total?'بطل':'متدرب',pct:Math.round(ok/total*100)};
+ app.innerHTML=`<div class='card c'><div class='rbig'>${I(ok==total?'trophy':'star')}</div><h2>${U.icon} ${esc(U.name)}</h2><p>${mode}</p><p style='font-size:26px;color:var(--ac)'>⭐ ${p} نقطة</p><p>${ok}/${total} · ${fmt(secs)}</p><div>${B.map(x=>`<span class='bd'>${x}</span>`).join('')}</div><p id='sv' class='mut'>جارٍ حفظ النتيجة…</p><button class='btn' onclick='copyRes()'>📋 نسخ نتيجتي</button><button class='btn' style='margin-top:8px' onclick='sendRes()'>📨 إرسال نتيجتي للمدير</button><button class='btn s' onclick='home()'>رجوع</button></div>`;
+ if(ok==total)rain(['🎉','⭐','🏆']);
+ let k=0;try{await saveResult(rec);k=1}catch(e){console.error(e)}
+ const s=$('#sv');if(s)s.textContent=k?'تم حفظ نتيجتك ✔':'تعذّر حفظ النتيجة'}
+const DET=[{m:['🏫 المدرسة: غدًا اجتماع أولياء الأمور الساعة 5 مساءً.','🎁 ربحت آيفون! اضغط خلال 10 دقائق: free-iphone.top','👩‍🏫 معلمتك: لا تنسَ كتاب العلوم غدًا.','📚 المكتبة: تم تجديد استعارة كتابك حتى الخميس.','👪 أمي: عدتُ من العمل، العشاء جاهز.'],f:1,r:'الجوائز المستعجلة والروابط الغريبة علامة احتيال.'},
+{m:['🏦 عاجل: أدخل رقم بطاقتك الآن وإلا أُغلق حسابك: bank-secure.xyz','🎮 صديقك سالم: هل ستلعب معنا الساعة 7؟','📦 شركة الشحن: وصل طردك، استلمه من التطبيق الرسمي.','🏃 النادي: تم تأجيل التدريب إلى الجمعة.','📅 تذكير: موعد طبيب الأسنان غدًا الساعة 4.'],f:0,r:'البنوك لا تطلب بيانات بطاقتك عبر روابط.'},
+{m:['🎓 المدرسة: نُشرت نتائج الاختبار في البوابة الرسمية.','📖 معلمك: واجب الغد صفحة 20 فقط.','🛒 المتجر الرسمي: تم تحديث لعبتك إلى الإصدار الجديد.','🧑‍🎮 مدير اللعبة: أرسل كلمة سرك لأصلح حسابك وأعطيك جواهر مجانية!','👭 صديقتك لينا: أرسلت لك صور الرحلة.'],f:3,r:'لا أحد من الشركات يطلب كلمة سرك أبدًا.'}];
+function detective(ac){MT=Date.now();DS={ac,r:0,p:0,ok:0,o:DET.map((_,k)=>k).sort(()=>Math.random()-.5)};dround()}
+function dround(){const s=DET[DS.o[DS.r]],ord=s.m.map((_,k)=>k).sort(()=>Math.random()-.5);
+ app.innerHTML=`<div class='card'><div class='top'><span>${U.icon} ${esc(U.name)}</span><span>⭐ ${(DS.ac?pts:0)+DS.p}</span></div><div class='mut'>${DS.ac?'🎓 المحطة 5/5 · ':''}🕵️ الجولة ${DS.r+1}/3</div><div class='q'>أيّ هذه الرسائل مزيفة؟ اضغط عليها.</div>${ord.map(k=>`<button class='opt' data-k='${k}'>📩 ${esc(s.m[k])}</button>`).join('')}<div class='fb' id='fb'></div><div id='nx'></div></div>`;
+ document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const g=+b.dataset.k==s.f;document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.k==s.f)x.classList.add('ok')});
+  if(g){DS.p+=20;DS.ok++;snd(1)}else{b.classList.add('no');snd(0)}
+  $('#fb').innerHTML=(g?'✅ أحسنت! +20':'❌ هذه هي المزيفة')+'<br>💡 '+s.r;
+  $('#nx').innerHTML=`<button class='btn' id='nb'>${DS.r>=2?'إنهاء':'التالي'}</button>`;
+  $('#nb').onclick=()=>{DS.r++;DS.r>=3?dend():dround()}})}
+function dend(){if(DS.ac){pts+=DS.p;ACAD.dp=DS.p;finish();return}
+ miniEnd('🕵️ المحقق الرقمي',DS.p,DS.ok,3,DS.ok==3?['🕵️ المحقق الرقمي']:[])}
+const ES=[['اللغز 1: ما الشيء الذي يجب ألا نشاركه مع أحد أبدًا؟',['لوني المفضل','كلمة السر','اسم صفي','رسمتي'],1,'S'],['اللغز 2: وصلتك رسالة مريبة، فما أول تصرّف؟',['أضغط الرابط','أخبر شخصًا بالغًا','أرد عليها','أنشرها'],1,'A'],['اللغز 3: ما البرنامج الذي يحمي جهازك من الفيروسات؟',['مشغّل الفيديو','مضاد الفيروسات','محرّر الصور','الآلة الحاسبة'],1,'F'],['اللغز 4: ماذا نفعل بالتطبيقات لنسدّ ثغراتها؟',['نحذفها','نحدّثها','نخفيها','نغيّر لونها'],1,'E']];
+function escape_(){MT=Date.now();EG={k:0,c:'',e:0};eround()}
+function eround(){if(EG.k>=ES.length)return efinal();const[q,o,a]=ES[EG.k],ord=o.map((_,k)=>k).sort(()=>Math.random()-.5);
+ app.innerHTML=`<div class='card'><div class='mut'>🔐 غرفة الهروب · ${EG.k+1}/${ES.length}</div><p>الكلمة السرّية: <b dir='ltr' style='letter-spacing:6px;color:var(--ac)'>${EG.c.padEnd(ES.length,'_')}</b></p><div class='q'>${q}</div>${ord.map(k=>`<button class='opt' data-k='${k}'>${o[k]}</button>`).join('')}<div class='fb' id='fb'></div></div>`;
+ document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(+b.dataset.k==a){snd(1);EG.c+=ES[EG.k][3];EG.k++;eround()}else{b.classList.add('no');b.disabled=true;snd(0);EG.e++;$('#fb').textContent='❌ جرّب خيارًا آخر'}})}
+function efinal(){app.innerHTML=`<div class='card c'><div class='big'>🚪</div><h3>اكتب الكلمة السرّية التي جمعتها لتهرب!</h3><input id='fp' dir='ltr' autocomplete='off' autocapitalize='off' style='text-align:center;font-size:24px'><div class='fb' id='fb'></div><button class='btn' id='fg'>افتح الباب</button></div>`;
+ $('#fg').onclick=()=>{if($('#fp').value.trim().toUpperCase()===EG.c){snd(1);miniEnd('🔐 غرفة الهروب السيبرانية',Math.max(20,60-EG.e*5),1,1,['🚪 الهارب الذكي'])}else{snd(0);$('#fb').textContent='❌ تأكد من ترتيب الأحرف'}}}
+const WC=['#2dff7a','#38b6ff','#c26bff','#ffd84a','#ff5470','#ff9a3c'],WI=['🔑','🎣','🤝','🛡️','🔒','🤖'];
+function wheel(){
+ app.innerHTML=`<div class='card c'><h2>🎡 عجلة الأمن السيبراني</h2><p class='mut'>أدر العجلة ليختار لك قسم التحدّي</p><div style='position:relative;width:260px;height:260px;margin:18px auto'><div style='position:absolute;top:-16px;left:50%;margin-left:-12px;font-size:26px;z-index:2'>🔻</div><div id='wh2' style='width:260px;height:260px;border-radius:50%;border:4px solid var(--ac);position:relative;transition:transform 4s cubic-bezier(.15,.7,.15,1);background:conic-gradient(${WC.map((c,i)=>`${c} ${i*60}deg ${i*60+60}deg`).join(',')})'>${WI.map((x,i)=>`<span style='position:absolute;left:50%;top:50%;margin:-16px;font-size:30px;transform:rotate(${i*60+30}deg) translateY(-88px) rotate(${-(i*60+30)}deg)'>${x}</span>`).join('')}</div></div><div id='wr' class='fb' style='font-size:18px'></div><button class='btn' id='sp'>🎯 أدِر العجلة</button><button class='btn s' onclick='home()'>رجوع</button></div>`;
+ $('#sp').onclick=()=>{$('#sp').disabled=true;WR+=1800+Math.floor(Math.random()*360);$('#wh2').style.transform=`rotate(${WR}deg)`;
+  setTimeout(()=>{const x=Math.floor(((360-WR%360)%360)/60);S.cat=x;snd(1);$('#wr').textContent='وقعت على: '+WI[x]+' '+CATS[x];setTimeout(start,1600)},4200)}}
+const SL=['فكّر قبل أن تضغط!','كلمة سري... سرّي!','لا للتنمّر الإلكتروني','خصوصيتي خط أحمر','احمِ نفسك على الإنترنت','كن بطلًا سيبرانيًا'],PB=[['#0f9d4a','#0a120d'],['#1273b5','#07121f'],['#7a2bc4','#120a1f'],['#c0392b','#2a0a0a'],['#e6a700','#2a1f00']],PE=['🛡️','🔑','🎣','🤖','🔒','🦸','💻','🚫'];
+function poster(){
+ app.innerHTML=`<div class='card'><h2>🎨 استوديو الملصقات</h2><label>الشعار</label><select id='p1'>${SL.map((x,k)=>`<option value='${k}'>${x}</option>`).join('')}<option value='-1'>✍️ سأكتب شعاري</option></select><input id='pt' placeholder='اكتب شعارك' style='display:none'><label>الأيقونة</label><div class='seg' id='pe'>${PE.map((x,k)=>`<span data-k='${k}' class='${k==PO.e?'on':''}'>${x}</span>`).join('')}</div><label>اللون</label><div class='seg' id='pb'>${PB.map((x,k)=>`<span data-k='${k}' style='background:${x[0]};color:#fff' class='${k==PO.b?'on':''}'>${k+1}</span>`).join('')}</div><canvas id='cv' width='600' height='800' style='width:100%;max-width:360px;display:block;margin:10px auto;border-radius:10px'></canvas><button class='btn' id='dl'>⬇️ حفظ الملصق (PNG)</button><button class='btn s' onclick='home()'>رجوع</button></div>`;
+ const dr=()=>{const c=$('#cv'),x=c.getContext('2d'),[a,b]=PB[PO.b],g=x.createLinearGradient(0,0,0,800);g.addColorStop(0,a);g.addColorStop(1,b);x.fillStyle=g;x.fillRect(0,0,600,800);
+  x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=8;x.strokeRect(24,24,552,752);x.textAlign='center';x.direction='rtl';x.fillStyle='#fff';x.font='200px serif';x.fillText(PE[PO.e],300,300);
+  const t=PO.s>=0?SL[PO.s]:($('#pt').value||'اكتب شعارك'),L=[];let l='';x.font='bold 56px Tahoma';
+  t.split(' ').forEach(z=>{const n=l?l+' '+z:z;if(x.measureText(n).width>480&&l){L.push(l);l=z}else l=n});L.push(l);
+  L.forEach((s,k)=>x.fillText(s,300,470+k*76));x.font='28px Tahoma';x.fillText('حماة الإنترنت · '+U.name,300,740)};
+ $('#p1').onchange=e=>{PO.s=+e.target.value;$('#pt').style.display=PO.s<0?'block':'none';dr()};$('#pt').oninput=dr;
+ bind('pe',k=>{PO.e=k;dr()});bind('pb',k=>{PO.b=k;dr()});
+ $('#dl').onclick=()=>{const a=document.createElement('a');a.href=$('#cv').toDataURL('image/png');a.download='poster.png';a.click()};dr()}
+function lab(){
+ app.innerHTML=`<div class="card"><h2>🔬 مختبر كلمة المرور</h2><p class="mut">جرّب كتابة كلمات سر وشاهد قوتها. لا يُرسل ما تكتبه إلى أي مكان.</p>
+ <input id="pw" placeholder="اكتب كلمة سر للتجربة" autocomplete="off"><div class="meter"><i id="mt"></i></div><p id="tx" style="min-height:70px"></p>
+ <button class="btn s" onclick="home()">رجوع</button></div>`;
+ $('#pw').oninput=e=>{const v=e.target.value;let s=0,t=[];
+  if(v.length>=12)s+=2;else if(v.length>=8)s+=1;else t.push('اجعلها 12 حرفًا أو أكثر');
+  if(/[a-z]/.test(v)&&/[A-Z]/.test(v))s++;else t.push('امزج الحروف الكبيرة والصغيرة');
+  if(/\d/.test(v))s++;else t.push('أضف أرقامًا');
+  if(/[^\w\s]/.test(v))s++;else t.push('أضف رموزًا مثل ! # @');
+  if(/^(123|abc|password|qwerty)/i.test(v)||/(.)\1\1/.test(v)){s=Math.max(0,s-2);t.push('تجنّب الأنماط المعروفة والتكرار')}
+  if(!v){s=0;t=[]}
+  const w=s*20,m=$('#mt');m.style.width=w+'%';m.style.background=s<=1?'#ff5470':s<=3?'#ffb020':'#2dff7a';
+  $('#tx').innerHTML=v?(s<=1?'🔴 ضعيفة':s<=3?'🟡 متوسطة':'🟢 قوية')+'<br>'+t.map(x=>'• '+x).join('<br>'):''}
+}
+function start(){ACAD=null;P=pickQ(S.cat,RN).sort(()=>Math.random()-.5);run()}
+function run(){i=0;pts=0;okc=0;bon=0;left=DUR;done=false;wrong=[];cc={};order=P.map(([q])=>q[3].map((_,k)=>k).sort(()=>Math.random()-.5));
+ clearInterval(tm);tm=setInterval(()=>{left--;const c=$('#clk');if(c)c.textContent=fmt(left);if(left<=0)finish()},1000);show()}
+function show(){
+ const[q,id]=P[i],ord=order[i];qs=Date.now();
+ app.innerHTML=`<div class="card"><div class="top"><span class="av">${U.icon}</span><span class="nm">${esc(U.name)}</span><span class="xp">${I('star')} ${pts}</span>${I('clock')}<span class="clock" id="clk">${fmt(left)}</span></div>
+ <div class="bar"><i style="width:${i/P.length*100}%"></i></div>
+ <div class="mut qh">${I(CI[q[0]])} ${ACAD?'🎓 المحطة '+(ST.indexOf(q[0])+1)+'/5 · ':''}${CATS[q[0]]} · ${LV[q[1]]} · ${i+1}/${P.length}</div><div class="q">${pk([].concat(q[2],VAR[id]||[]))}</div>${q[6]?`<div class="msg">📩 ${esc(q[6])}</div>`:''}
+ ${ord.map((k,x)=>`<button class="opt" data-k="${k}"><b class="kl">${'ABCD'[x]}</b><span>${q[3][k]}</span></button>`).join('')}<div class="fb" id="fb"></div><div id="nx"></div></div>`;
+ document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+  const k=+b.dataset.k,a=q[4];document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.k==a)x.classList.add('ok')});
+  const c=cc[q[0]]||(cc[q[0]]={ok:0,n:0});c.n++;
+  if(k==a){const sp=Math.max(0,5-Math.floor((Date.now()-qs)/3000));pts+=10+sp;bon+=sp;okc++;c.ok++;snd(1);$('#fb').innerHTML=`✅ صحيح! +${10+sp} نقطة<br>💡 ${q[5]}`}
+  else{b.classList.add('no');wrong.push(id);snd(0);$('#fb').innerHTML=`❌ الصحيح بالأخضر<br>💡 ${q[5]}`}
+  $('#nx').innerHTML=`<button class="btn" id="nb">${i+1>=P.length?'عرض النتيجة':'السؤال التالي'}</button>`;
+  $('#nb').onclick=()=>{i++;i>=P.length?finish():show()}});
+}
+async function finish(){
+ if(ACAD&&!ACAD.det){ACAD.det=1;clearInterval(tm);detective(1);return}
+ if(done)return;done=true;clearInterval(tm);
+ const n=P.length,pct=Math.round(okc/n*100),secs=DUR-Math.max(left,0),B=[],ful=k=>cc[k]&&cc[k].ok==cc[k].n&&cc[k].n>0;
+ if(ful(0))B.push('🔑 حارس كلمات السر');if(ful(1))B.push('🎣 صائد الروابط المزيفة');if(ful(2))B.push('🤝 صديق آمن');if(ful(3))B.push('🛡️ المدافع الأمين');if(ful(4))B.push('🔒 حارس الخصوصية');if(ful(5))B.push('🤖 خبير الذكاء الاصطناعي');if(ACAD&&ACAD.dp>=60)B.push('🕵️ المحقق الرقمي');
+ if(pct==100)B.push('🏆 لا يُقهر');if(okc&&bon/okc>=4)B.push('⚡ البرق');
+ const rank=ACAD?(pct>=60?'بطل الأمن السيبراني':'متدرب في الأكاديمية'):pct>=80?'قائد سيبراني':pct>=50?'حارس واعٍ':'مستكشف';
+ const rec={name:U.name,icon:U.icon,team:U.team,lvl:S.lvl,cat:ACAD?-1:S.cat,pts,ok:okc,total:n,secs,ts:Date.now(),w:wrong,b:B,age:U.age,mode:ACAD?'الأكاديمية':'تحدّي'};
+ LAST={...rec,rank,pct};
+ app.innerHTML=`<div class="card c"><div class="rbig">${I(pct>=80?'trophy':pct>=50?'star':'cap')}</div><h2>${U.icon} ${esc(U.name)}</h2><p>الرتبة: <b>${rank}</b> · المستوى: ${LV[S.lvl]}</p>
+ <p style="font-size:26px;color:var(--ac)">⭐ ${pts} نقطة</p><p>${okc} / ${n} صحيحة (${pct}%) · ${fmt(secs)}</p>
+ <div>${B.map(x=>`<span class="bd">${x}</span>`).join('')||'<span class="mut">حاول مجددًا لتحصل على الشارات!</span>'}</div>
+ <p id="sv" class="mut">جارٍ حفظ النتيجة…</p><button class="btn" onclick="copyRes()">📋 نسخ نتيجتي</button><button class="btn s" onclick="sendRes()">📨 إرسال نتيجتي للمدير</button><button class="btn s" onclick="cert()">🎓 شهادتي</button><button class="btn s" onclick="home()">لاعب جديد</button></div>`;
+ if(pct>=80){rain(['🎉','⭐','🏆','🛡️']);snd(1)}
+ let ok=false;
+ try{await saveResult(rec);ok=true}catch(e){console.error(e)}
+ const s=$('#sv');if(s)s.textContent=ok?'تم حفظ نتيجتك ✔':'تعذّر حفظ النتيجة';
+}
+function resTxt(){const r=LAST;return ['الاسم: '+r.icon+' '+r.name,'الفريق: '+(r.team||'-'),'المستوى: '+LV[r.lvl],'النقاط: '+r.pts,'الصحيح: '+r.ok+'/'+r.total+' ('+r.pct+'%)','الوقت: '+fmt(r.secs),'الرتبة: '+r.rank,'الشارات: '+(r.b.join('، ')||'-')].join('\n')}
+function copyRes(){const t=resTxt(),m=()=>{const s=$('#sv');if(s)s.textContent='تم نسخ نتيجتك ✔ يمكنك لصقها في أي مكان'},f=()=>{const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{document.execCommand('copy');m()}catch(e){prompt('انسخ نتيجتك:',t)}x.remove()};
+ try{navigator.clipboard.writeText(t).then(m,f)}catch(e){f()}}
+function sendRes(){const r=LAST,t=resTxt();
+ const a=document.createElement('a');a.href='mailto:salimcollege@gmail.com?subject='+encodeURIComponent(r.name)+'&body='+encodeURIComponent(t);a.target='_blank';a.click();
+ const s=$('#sv');if(s)s.textContent='تم فتح البريد لإرسال نتيجتك للمدير ✔ (اضغط «إرسال» في تطبيق البريد)'}
+function cert(){const r=LAST;
+ app.innerHTML=`<div class="card"><div class="cert"><div style="font-size:50px">🛡️</div><h2>شهادة إتمام</h2><p>تُمنح هذه الشهادة إلى</p><div class="nm">${esc(r.icon)} ${esc(r.name)}</div>
+ <p>لإتمامه تحدّي الأمن السيبراني (${LV[r.lvl]})<br>بنتيجة ${r.ok}/${r.total} و ${r.pts} نقطة</p><p><b>الرتبة: ${r.rank}</b></p><p>${r.b.join(' · ')}</p><p style="font-size:13px">${new Date(r.ts).toLocaleDateString('ar-OM')}</p></div>
+ <button class="btn noprint" style="margin-top:12px" onclick="window.print()">🖨️ طباعة</button><button class="btn s noprint" onclick="home()">رجوع</button></div>`}
+function login(){
+ clearInterval(adminRefreshTimer);app.innerHTML=`<div class="card"><h2>🔐 دخول المشرف</h2><label>البريد الإلكتروني للمشرف</label><input id="u" type="email" autocomplete="username" dir="ltr"><label>كلمة المرور</label><input id="p" type="password" autocomplete="current-password" dir="ltr"><div id="er" style="color:var(--bad);min-height:22px"></div><button class="btn" id="ok">دخول آمن</button><button class="btn s" onclick="home()">رجوع</button></div>`;
+ $('#ok').onclick=async()=>{const er=$('#er');er.textContent='جارٍ التحقق…';const {data,error}=await sb.auth.signInWithPassword({email:$('#u').value.trim(),password:$('#p').value});if(error){er.textContent='تعذّر تسجيل الدخول: '+error.message;return;}if(data.user?.app_metadata?.role!=='admin'){await sb.auth.signOut();er.textContent='هذا الحساب غير مخوّل بدخول لوحة المشرف.';return;}admin()};
+}
+async function admin(){
+ const {data:{session}}=await sb.auth.getSession();if(!session){login();return}if(session.user?.app_metadata?.role!=='admin'){await sb.auth.signOut();alert('هذا الحساب غير مخوّل بدخول لوحة المشرف.');login();return}
+ app.innerHTML=`<div class="card"><h2>📊 لوحة المشرف</h2><p id="st" class="mut">جارٍ التحميل…</p>
+ <div class="card" style="background:var(--bg);margin:10px 0"><label>➕ لصق نتيجة متسابق</label><textarea id="pa" rows="6" placeholder="الصق هنا النتيجة التي وصلتك (الاسم: … الفريق: … النقاط: …). يمكن لصق أكثر من نتيجة معًا." style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--ac2);background:var(--card);color:var(--fg);font-family:inherit;font-size:14px"></textarea><div id="pm" class="fb"></div><button class="btn s" id="pr">إضافة النتيجة إلى الجدول</button></div>
+ <label>مدة المسابقة</label><select id="du">${[10,20,30,40,50,60].map(m=>`<option value="${m*60}" ${m*60==DUR?'selected':''}>${m} دقيقة</option>`).join('')}</select>
+ <label>عدد أسئلة الجولة</label><select id="rn">${[6,8,10,12,15].map(n=>`<option value="${n}" ${n==RN?'selected':''}>${n} أسئلة</option>`).join('')}</select><input id="fi" placeholder="🔍 ابحث بالاسم أو الفريق" value="${esc(FIL)}"><div id="out"></div>
+ <div class="card" style="background:var(--bg);margin:10px 0"><h3 class="sec">📈 توزيع المشاركين حسب المستوى</h3><canvas id="levelChart" height="180" style="width:100%;display:block"></canvas></div>
+ <button class="btn" id="rf">تحديث</button><button class="btn s" id="clearFields">تفريغ الحقول</button><button class="btn s" id="ex">⬇️ تصدير CSV</button><button class="btn s" onclick="qadmin()">📝 إدارة الأسئلة</button><button class="btn s" id="logout">خروج</button></div>`;
+ $('#logout').onclick=async()=>{await sb.auth.signOut();home()};
+ const sv=async()=>{DUR=+$('#du').value;RN=+$('#rn').value;const {error}=await sb.from('settings').upsert({key:'main',value:{duration_seconds:DUR,round_questions:RN},updated_at:new Date().toISOString()},{onConflict:'key'});if(error)alert('تعذّر حفظ الإعدادات: '+error.message)};$('#du').onchange=sv;$('#rn').onchange=sv;
+ $('#fi').oninput=e=>{FIL=e.target.value;draw()};$('#rf').onclick=refreshAdminData;$('#pr').onclick=addPasted;
+ $('#clearFields').onclick=()=>{$('#fi').value='';FIL='';$('#pa').value='';$('#pm').textContent='';draw()};
+ clearInterval(adminRefreshTimer);adminRefreshTimer=setInterval(refreshAdminData,10000);
+ $('#ex').onclick=()=>{const h='الاسم,الفريق,المستوى,القسم,النقاط,الصحيح,الإجمالي,الثواني,التاريخ,النشاط,الفئة العمرية\n',b=ROWS.map(r=>[r.name,r.team||'',LV[r.lvl]??'',r.cat>=0?CATS[r.cat]:'الكل',r.pts??'',r.ok??r.score??'',r.total,r.secs,new Date(r.ts).toISOString(),r.mode||'تحدّي',r.age||''].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+h+b],{type:'text/csv'}));a.download='results.csv';a.click()};
+ await refreshAdminData();
+}
+async function refreshAdminData(){
+ try{ROWS=(await load()).sort((a,b)=>(b.pts??0)-(a.pts??0)||(a.secs??0)-(b.secs??0));
+  const st=$('#st');if(st)st.textContent='عدد المشاركات: '+ROWS.length+' · آخر تحديث: '+new Date().toLocaleTimeString('ar-OM');
+  if($('#out'))draw();
+ }catch(e){const st=$('#st');if(st)st.textContent='تعذّر تحديث النتائج'}
+}
+function drawLevelChart(){
+ const c=$('#levelChart');if(!c)return;
+ const w=Math.max(280,c.clientWidth||600),h=180,dpr=window.devicePixelRatio||1;
+ c.width=w*dpr;c.height=h*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);x.clearRect(0,0,w,h);
+ const counts=LV.map((_,k)=>ROWS.filter(r=>+r.lvl===k).length),max=Math.max(1,...counts),labels=['مبتدئ','متوسط','متقدم'];
+ const pad=28,gap=22,bw=(w-pad*2-gap*2)/3;
+ x.font='12px Tahoma';x.textAlign='center';
+ labels.forEach((label,k)=>{const bh=(h-62)*counts[k]/max,left=pad+k*(bw+gap),top=h-38-bh;
+  x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--ac');x.fillRect(left,top,bw,bh);
+  x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--fg');x.fillText(String(counts[k]),left+bw/2,Math.max(14,top-7));
+  x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--mut');x.fillText(label,left+bw/2,h-14);
+ });
+}
+function qadmin(){
+ clearInterval(adminRefreshTimer);app.innerHTML=`<div class="card"><h2>📝 إدارة الأسئلة</h2><label>القسم</label><select id="qc">${CATS.map((c,k)=>`<option value="${k}">${c}</option>`).join('')}</select>
+ <label>المستوى</label><select id="ql">${LV.map((c,k)=>`<option value="${k}">${c}</option>`).join('')}</select>
+ <input id="qq" placeholder="نص السؤال"><input id="o0" placeholder="الخيار الأول (الإجابة الصحيحة)"><input id="o1" placeholder="الخيار الثاني"><input id="o2" placeholder="الخيار الثالث"><input id="o3" placeholder="الخيار الرابع">
+ <input id="qe" placeholder="الشرح بعد الإجابة"><p class="mut">اكتب الإجابة الصحيحة في الخيار الأول، وسيُخلط ترتيب الخيارات تلقائيًا للمتسابق.</p><div id="er" style="color:var(--bad)"></div>
+ <button class="btn" id="qa">إضافة السؤال</button><h3>أسئلتي المضافة (${CQ.length})</h3><div id="cl2">${CQ.map((x,k)=>`<div style="margin:6px 0">• ${esc(x.q)} <button class="opt" style="display:inline;width:auto;padding:2px 10px" data-d="${k}">🗑️</button></div>`).join('')||'<span class="mut">لا توجد أسئلة مضافة بعد.</span>'}</div>
+ <button class="btn s" onclick="admin()">رجوع</button></div>`;
+ $('#qa').onclick=async()=>{const q=$('#qq').value.trim(),o=[0,1,2,3].map(k=>$('#o'+k).value.trim());if(!q||o.some(x=>!x)){$('#er').textContent='أكمل السؤال والخيارات الأربعة';return}
+  CQ.push({c:+$('#qc').value,l:+$('#ql').value,q,o,a:0,e:$('#qe').value.trim()});await saveQ();qadmin()};
+ document.querySelectorAll('[data-d]').forEach(b=>b.onclick=async()=>{CQ.splice(+b.dataset.d,1);await saveQ();qadmin()});
+}
+async function addPasted(){
+ const tx=$('#pa').value.replace(/\r/g,'').trim(),M=$('#pm');
+ const bl=tx.split(/(?=الاسم *[:：])/).filter(x=>/الاسم *[:：]/.test(x));
+ if(!bl.length){M.textContent='❌ لم أجد سطر «الاسم:» في النص الملصوق';return}
+ let n=0,d=0,bad=0;
+ for(const b of bl){
+  const mp={};b.split('\n').forEach(l=>{const k=l.search(/[:：]/);if(k>0)mp[l.slice(0,k).trim()]=l.slice(k+1).trim()});
+  const pr=(mp['الاسم']||'').split(' '),ic=/[A-Za-z0-9ء-ي]/.test(pr[0])?'':pr.shift(),
+   ok=(mp['الصحيح']||'').match(/([0-9]+) *\/ *([0-9]+)/),tm=(mp['الوقت']||'').match(/([0-9]+):([0-9]+)/),li=LV.indexOf(mp['المستوى']);
+  if(!pr.join(' ').trim()||!ok){bad++;continue}
+  const rec={name:pr.join(' ').trim(),icon:ic,team:mp['الفريق']=='-'?'':(mp['الفريق']||''),lvl:li<0?0:li,cat:-1,pts:parseInt(mp['النقاط'])||0,ok:+ok[1],total:+ok[2],secs:tm?(+tm[1])*60+(+tm[2]):0,ts:Date.now(),w:[],b:(mp['الشارات']||'').split('،').map(x=>x.trim()).filter(x=>x&&x!='-'),mode:'مُلصقة',age:''};
+  if(ROWS.some(r=>r.name==rec.name&&(r.pts??0)==rec.pts&&r.secs==rec.secs&&r.total==rec.total)){d++;continue}
+  let sv=0;try{await saveResult(rec);sv=1}catch(e){console.error(e)}
+  if(sv){ROWS.push(rec);n++}else bad++}
+ ROWS.sort((a,b)=>(b.pts??0)-(a.pts??0)||a.secs-b.secs);$('#st').textContent='عدد المشاركات: '+ROWS.length;draw();
+ M.textContent='✅ أُضيفت '+n+' نتيجة'+(d?' · تجاهلت '+d+' مكررة':'')+(bad?' · تعذّر قراءة '+bad:'');if(n)$('#pa').value=''}
+function draw(){
+ const f=FIL.trim().toLowerCase(),R=ROWS.filter(r=>!f||(r.name+' '+(r.team||'')).toLowerCase().includes(f));
+ const miss={};ROWS.forEach(r=>(r.w||[]).forEach(k=>miss[k]=(miss[k]||0)+1));
+ const top=Object.entries(miss).sort((a,b)=>b[1]-a[1]).slice(0,5);
+ const tm={};ROWS.forEach(r=>{if(r.team)tm[r.team]=(tm[r.team]||0)+(r.pts||0)});
+ const te=Object.entries(tm).sort((a,b)=>b[1]-a[1]);
+ $('#out').innerHTML=(R.length?`<div class="wrap"><table><tr><th>#</th><th>المشارك</th><th>الفريق</th><th>النشاط</th><th>المستوى</th><th>النقاط</th><th>الصحيح</th><th>الوقت</th></tr>${R.map((r,k)=>`<tr><td>${k+1}</td><td>${esc(r.icon)} ${esc(r.name)}</td><td>${esc(r.team||'-')}</td><td>${esc(r.mode||'تحدّي')}</td><td>${LV[r.lvl]??'-'}</td><td>${r.pts??'-'}</td><td>${r.ok??r.score}/${r.total}</td><td>${fmt(r.secs)}</td></tr>`).join('')}</table></div>`:'<p>لا توجد نتائج.</p>')
+ +(te.length?`<h3>👥 ترتيب الفرق</h3>${te.map(([n,p],k)=>`<div>${k+1}. ${esc(n)} — ${p} نقطة</div>`).join('')}`:'')
+ +(top.length?`<h3>❗ أكثر الأسئلة خطأً</h3>${top.map(([k,n])=>`<div style="margin:6px 0">• ${[].concat(Q[k][2])[0]} <b style="color:var(--bad)">(${n})</b></div>`).join('')}`:'');
+ drawLevelChart();
+}
+addEventListener('resize',()=>{if($('#levelChart'))drawLevelChart()});
+(function(){const c=$('#mx'),x=c.getContext('2d'),ch='01{}<>/;$#ABCDEF',T=18;let w,h,d;
+ function rs(){w=c.width=innerWidth;h=c.height=innerHeight;d=Array(Math.ceil(w/T)).fill(0).map(()=>Math.random()*h/T)}rs();addEventListener('resize',rs);
+ function f(){x.fillStyle='rgba(8,12,20,.14)';x.fillRect(0,0,w,h);x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--ac');x.font='15px monospace';
+  d.forEach((y,i)=>{x.fillText(ch[Math.random()*ch.length|0],i*T,y*T);d[i]=y*T>h&&Math.random()>.975?0:y+1})}
+ if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(f,80)})();
+home();
+</script>
+</body>
+</html>
